@@ -1,0 +1,14 @@
+{% if tests.count > 0 %}
+  {% for test in tests %}
+    <div class="col-lg-4">
+      <!-- для спейсинга между объектами -->
+      <div class="test col-md-12">
+        <h3><a class="stretched-link" href="{% url "show_test" test.id %}">{{ test.test_title }}</a></h3>
+        <img class="test_img" src="{{ test.test_image }}" alt="Картинка к тесту" width="100%" vspace="10"></img>
+        <p>{{ test.brief }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>Нет тестов.</p>
+{% endif %}

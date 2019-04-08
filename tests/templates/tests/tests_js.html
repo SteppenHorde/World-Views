@@ -1,0 +1,151 @@
+// Этот js код был сгенерирован автоматически
+// max_score_id - максимальный возможный балл результата
+// cur_score_id - текущий балл результата
+{% for result in results %}
+var max_score_{{ result.id }} = 0
+var cur_score_{{ result.id }} = 0
+{% endfor %}
+
+var qn = 0; // Номер вопроса
+var prev_answer = null; // Предыдущий ответ
+var temp_prev_answer = new Array(); // Костыль
+cur_question(); // Запускаем первый вопрос
+
+// Находим максимальный балл для каждого из результатов:
+for (var i = 0; i < questions.length; i++) { // Пробегаем по списку questions
+    var choices = questions[i]["choices"] // словарь choices
+    for (const [ choice_id, choice_value ] of Object.entries(choices)) { // по словарю choices
+        var effects = choice_value["effects"] // словарь effects
+        for (const [ result_id, effect_value ] of Object.entries(effects)) {
+            {% for result in results|slice:":1" %}
+            if (result_id == {{ result.id }}) {
+                max_score_{{ result.id }} += effect_value;
+            {% endfor %}
+            {% for result in results|slice:"1:" %}
+            } else if (result_id == {{ result.id }}) {
+                max_score_{{ result.id }} += effect_value;
+            {% endfor %}
+            }
+        }
+    }
+}
+
+
+function cur_question() {
+    document.getElementById("question-text").innerHTML = questions[qn].title;
+    document.getElementById("question-number").innerHTML = "Вопрос " + (qn + 1) + " из " + (questions.length);
+    var choices = questions[qn]["choices"]; // словарь choices
+    var one_option = questions[qn]["one_option"]; // одновариантный опрос (True/False)
+    $( "#choices" ).empty(); // очищаем ответы
+    var form = document.getElementById("choices"); // материнский элемент
+    if (one_option == true) {
+        for (const [ choice_id, choice_value ] of Object.entries(choices)) { // по словарю choices
+            var wrapper = document.createElement("div"); // обёртка
+            wrapper.className = "custom-control custom-radio";
+            var input = document.createElement("input"); // вариант ответа
+            input.className = "custom-control-input";
+            input.type = "radio";
+            input.name = "choice"; // для радиокнопки name одинаковый
+            input.id = choice_id;
+            input.value = choice_id;
+            var label = document.createElement("label"); // текст ответа
+            label.className = "custom-control-label";
+            label.setAttribute("for", choice_id);
+            label.innerHTML = choice_value["title"];
+            form.appendChild(wrapper);
+            wrapper.appendChild(input);
+            wrapper.appendChild(label);
+        }
+    } else {
+        for (const [ choice_id, choice_value ] of Object.entries(choices)) { // по словарю choices
+            var wrapper = document.createElement("div"); // обёртка
+            wrapper.className = "custom-control custom-checkbox";
+            var input = document.createElement("input"); // вариант ответа
+            input.className = "custom-control-input";
+            input.type = "checkbox";
+            input.name = "choice" + choice_id; // для чекбокса name разный
+            input.id = choice_id;
+            input.value = choice_id;
+            var label = document.createElement("label"); // текст ответа
+            label.className = "custom-control-label";
+            label.setAttribute("for", choice_id);
+            label.innerHTML = choice_value["title"];
+            form.appendChild(wrapper);
+            wrapper.appendChild(input);
+            wrapper.appendChild(label);
+        }
+    }
+
+    if (prev_answer == null) {
+        document.getElementById("back_button").disabled = true;
+    } else {
+        document.getElementById("back_button").disabled = false;
+    }
+
+}
+
+
+function next_question() {
+    // итерация по всем элементам формы:
+    document.querySelectorAll('input.custom-control-input').forEach(function(node) {
+        if (node.checked) {
+            var choice_id = node.value;
+            temp_prev_answer.push(choice_id); // сохраняем choice_id для возврата на пред вопрос
+            var effects = questions[qn]["choices"][choice_id]["effects"]; // словарь effects
+            {% for result in results %}
+            if ("{{ result.id }}" in effects) {
+                cur_score_{{ result.id }} += effects["{{ result.id }}"];
+            }
+            {% endfor %}
+        }
+    });
+
+    if (temp_prev_answer.length == 0) { // если не выбран ни один вариант ответа - игнор
+        temp_prev_answer = new Array();
+        return;
+    } else {
+        prev_answer = temp_prev_answer;
+        temp_prev_answer = new Array();
+    }
+    qn++;
+    if (qn < questions.length) {
+        cur_question();
+    } else {
+        results();
+    }
+}
+
+
+function prev_question() {
+    if (prev_answer == null) {
+        return;
+    }
+    qn--;
+    for (var i = 0; i < prev_answer.length; i++) { // Пробегаем по списку prev_answer
+        var effects = questions[qn]["choices"][prev_answer[i]]["effects"] // словарь effects
+        {% for result in results %}
+        if ("{{ result.id }}" in effects) {
+            cur_score_{{ result.id }} -= effects["{{ result.id }}"]
+        }
+        {% endfor %}
+    };
+    prev_answer = null;
+    cur_question();
+
+}
+
+
+function calc_score(score, max) {
+    return ((score / max) * 100).toFixed(1)
+}
+
+
+function results() {
+    location.href = `results`
+        {% for result in results|slice:":1" %}
+        + `?{{ result.id }}=${calc_score(cur_score_{{ result.id }}, max_score_{{ result.id }})}`
+        {% endfor %}
+        {% for result in results|slice:"1:" %}
+        + `&{{ result.id }}=${calc_score(cur_score_{{ result.id }}, max_score_{{ result.id }})}`
+        {% endfor %}
+}

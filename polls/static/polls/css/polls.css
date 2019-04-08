@@ -1,0 +1,22 @@
+div.poll {
+    background-color: #E9E9E9;
+    box-shadow: 0rem 0rem 0.25rem #222222;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+p.hm_voted {
+    font-size: var(--litle-font-size);
+    margin-top: 0.3rem;
+    text-align: right;
+}
+
+p.all_voted {
+    margin-top: 0.3rem;
+    text-align: right;
+}
+
+div.poll_btn {
+    text-align:center
+}

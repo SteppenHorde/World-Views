@@ -1,0 +1,55 @@
+{% load static %}
+{% load filters %}
+
+{% if polls %}
+  {% for poll, choices in polls.items %}
+    <div class="poll">
+      <form method="post" class="voteForm" id="poll{{ poll.id }}" action="{% url 'polls_vote' poll.id %}">
+        {% csrf_token %}
+        <h3>{{ poll.poll_title }}</h3>
+        {% if poll.id in completed_polls %}
+          {% for choice in choices %}
+            <p>
+              {% with percent=poll.all_votes|get_percent:choice.votes %}
+                {% if choice.id in selected_choices %}
+                  <p>{{ choice.choice_text }} <strong>&#10004;</strong></p>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ percent }}%;" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">{{ percent }}%</div>
+                  </div>
+                  <p class="hm_voted">(Проголосовало: {{ choice.votes }})</p>
+                {% else %}
+                  <p>{{ choice.choice_text }}</p>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ percent }}%;" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">{{ percent }}%</div>
+                  </div>
+                  <p class="hm_voted">(Проголосовало: {{ choice.votes }})</p>
+                {% endif %}
+              {% endwith %}
+            </p>
+          {% endfor %}
+          <p class="all_voted">(<i>Общее число проголосовавших: <strong>{{ poll.all_votes }}</strong></i>)</p>
+        {% else %}
+          {% for choice in choices %}
+            {% if poll.one_option %}
+              <div class="custom-control custom-radio mb-3">
+                <input class="custom-control-input" type="radio" class="custom-control-input" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}" required>
+                <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.choice_text }}</label>
+              </div>
+            {% else %}
+              <div class="custom-control custom-checkbox mb-3">
+                <input class="custom-control-input" type="checkbox" name="choice{{ choice.id }}" id="choice{{ choice.id }}" value="{{ choice.id }}">
+                <label class="custom-control-label" for="choice{{ choice.id }}">{{ choice.choice_text }}</label>
+              </div>
+            {% endif %}
+          {% endfor %}
+          <div class="text-center">
+            <button type="submit" class="poll_btn btn btn-primary btn-sm">Проголосовать</button>
+          </div>
+        {% endif %}
+      </form>
+    </div>
+  {% endfor %}
+  <script type='text/javascript' src="{% static "polls/js/poll_vote.js" %}"></script>
+{% else %}
+  <p>Нет опросов.</p>
+{% endif %}

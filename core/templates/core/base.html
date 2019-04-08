@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}World Views{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static "core/img/favicon.ico" %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "core/css/base.css" %}">
+    {% block styles %}
+      <link rel="stylesheet" type="text/css" href="{% static "core/css/main.css" %}">
+    {% endblock %}
+
+    <script type="text/javascript" src="{% static "core/js/jquery-3.3.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "core/js/popper.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    {% block scripts %}{% endblock %}
+</head>
+<body>
+  {% block nav %}
+    <nav class="navigation navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url "main" %}">World Views</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "main" %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "news" %}">Новости</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "tests" %}">Тесты</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "polls" %}">Опросы</a>
+          </li>
+        </ul>
+        <form class="search form-inline my-2 my-xl-0" action="{% url "search" %}">
+          <input class="form-control mr-xl-2" type="search" placeholder="Поиск" aria-label="Search" name="q">
+          <button class="btn btn-success my-2 my-xl-0" type="submit">Поиск</button>
+        </form>
+      </div>
+    </nav>
+
+
+  {% endblock %}
+
+<div class="container-fluid">
+  {% block content %}{% endblock %}
+</div>
+
+{% block footer %}
+<footer id="footer">
+  <p>Проект World Views создан исключительно в развлекательных целях.</p>
+  <p>Отдельная благодарность авторам проектов <a class="footer-link" href="https://www.politiscales.net">Politiscales</a> и <a class="footer-link" href="https://8values.github.io/">8values</a>, отчасти вдохновившим создание World Views.</p>
+  <small class="d-block mb-3 text-muted">&#127279 World Views, 2019.</small>
+</footer>
+{% endblock %}
+</body>
+</html>

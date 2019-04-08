@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}World Views{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href="{% static "core/css/news.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "core/css/main.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "polls/css/polls.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "tests/css/tests.css" %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="row main_desc">
+  <h1 class="col-sm-12 main_h"><strong>Добро пожаловать на World Views!</strong></h1>
+  <p class="desc">Данный проект создан с целью помочь людям узнать больше о своём собственном мировоззрении, найти термины, описывающие тот или иной его аспект и даже обнаружить что-то новое в себе. На сайте World Views будет представлена серия тестов, прохождение которых поможет человеку не только развлечься, но и лучше познать себя.</p>
+  <p class="desc">Также на сайте представлены различные актуальные опросы, анонимно демонстрирующие общественное мнение по тому или иному вопросу.</p>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    <!-- для спейсинга между объектами -->
+    <div class="col-md-12 main_cont content">
+      {% block news_h %}<h2><strong>Последние новости:</strong></h2>{% endblock %}
+      {% include "core/main-news_list.html" %}
+      <form class="main-show_all" action="{% url "news" %}">
+          <button class="btn btn-outline-dark btn-lg" type="submit">Все новости</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="col-md-12 main_cont content">
+      {% block tests_h %}<h2><strong>Последние тесты:</strong></h2>{% endblock %}
+      {% include "tests/main-tests_list.html" %}
+      <form class="main-show_all" action="{% url "tests" %}">
+          <button class="btn btn-outline-dark btn-lg" type="submit">Все тесты</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="col-md-12 main_cont content">
+      {% block polls_h %}<h2><strong>Последние опросы:</strong></h2>{% endblock %}
+      {% include "polls/polls_list.html" %}
+      <form class="main-show_all" action="{% url "polls" %}">
+          <button class="btn btn-outline-dark btn-lg" type="submit">Все опросы</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

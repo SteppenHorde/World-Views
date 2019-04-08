@@ -1,0 +1,99 @@
+:root {
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    /*
+    (100vw - Vmin)/(Vmax - Vmin) * (Fmax - Fmin) + Fmin, где:
+    Vmin - минимальная ширина экрана
+    Vmax - максимальная ширина экрана
+    Fmax - максимальный размер шрифта
+    Fmin - минимальный размер шрифта
+    */
+    --main-font-size: calc((100vw - 320px)/(2560 - 320) * (32 - 14) + 14px);
+    --litle-font-size: calc((100vw - 320px)/(2560 - 320) * (20 - 8) + 7px);
+    --footer-font-size: calc((100vw - 320px)/(2560 - 320) * (20 - 8) + 8px);
+    --header-font-size: calc((100vw - 320px)/(2560 - 320) * (24 - 12) + 12px);
+    --h1-font-size: calc((100vw - 320px)/(2560 - 320) * (46 - 22) + 22px);
+    --h2-font-size: calc((100vw - 320px)/(2560 - 320) * (40 - 18) + 18px);
+    --h3-font-size: calc((100vw - 320px)/(2560 - 320) * (36 - 14) + 14px);
+}
+
+body {
+    font: var(--font-family-sans-serif);
+    font-size: var(--main-font-size);
+    margin-top: 3.5rem;
+}
+
+.navigation {
+    font-size: var(--header-font-size);
+    box-shadow: 0vmin 0vmin 0.8vmin #222222;
+}
+
+@media (min-width: 1280px) {
+    .container-fluid {
+        margin: 7.5% 1%;
+    }
+}
+
+@media (min-width: 501px) and (max-width: 1279px) {
+    .container-fluid {
+        margin: 11.5% 1%;
+    }
+}
+
+@media (max-width: 500px) {
+    .container-fluid {
+        margin: 25% 1%;
+    }
+}
+
+@media (max-width: 970px) {
+    .search {
+        display:none !important;
+    }
+}
+
+#footer {
+    font-size: var(--footer-font-size);
+    text-align: center;
+    padding: 0.8rem;
+    margin-top: -2.5rem;
+    border-top: #C5C5C5 0.2vmin solid;
+}
+
+a.nav-link:hover{
+    color: #ffffff !important;
+}
+
+a {
+  color: #000000;
+}
+
+a.footer-link {
+  color: #0000FF;
+}
+
+.content {
+    margin-top: 2rem;
+    background-color: #F5F5F5;
+    box-shadow: 0rem 0rem 0.25rem #111111;
+    border-radius: 1.5rem;
+    padding: 1vmax;
+}
+
+h1 {
+    font-size: var(--h1-font-size);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: var(--h2-font-size);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: var(--h3-font-size);
+    margin-bottom: 1rem;
+    text-align: center;
+}
