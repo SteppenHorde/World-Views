@@ -1,0 +1,13 @@
+{% extends "core/news_base.html" %}
+{% load static %}
+
+{% block title %}Новости{% endblock %}
+
+{% block content %}
+<div class="content">
+  {% block news_h %}<h1><strong>Новости:</strong></h1>{% endblock %}
+  <div class="row">
+    {% include "core/news_list.html" %}
+  </div>
+</div>
+{% endblock %}

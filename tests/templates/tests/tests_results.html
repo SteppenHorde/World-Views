@@ -1,0 +1,43 @@
+{% extends "tests/tests_base.html" %}
+{% load static %}
+{% load filters %}
+
+{% block title %}Результаты{% endblock %}
+
+{% block content %}
+<div class="content">
+  <h1><strong>{{ test.test_title }}</strong></h1>
+  <h2>Результат:</h2>
+  <div class="tests-main_result">
+  {% for result in results|slice:":1" %}
+    <h3><strong>{{ forloop.counter }}. {{ result.1.result_title }}</strong></h3>
+    <p class="tests-similarity">Сходство с этим результатом: {{ result.0 }}%</p>
+    <div class="tests-main_result_img">
+      <img class="tests-main_result_img" src='{{ result.1.result_image.url }}' alt="Картинка к {{ result.1.result_title }}"></img>
+    </div>
+    <p>{{ result.1.result_desc }}</p>
+  {% endfor %}
+  </div>
+  <br>
+  <div class="tests-show_all">
+    <button class="btn btn-info btn-md" type="button" data-toggle="collapse" data-target="#tests-other_results" aria-expanded="false" aria-controls="tests-other_results">
+      Показать остальные результаты
+    </button>
+  </div>
+  <div class="collapse" id="tests-other_results">
+    <div class="card card-body tests-other_results">
+      {% for result in results|slice:"1:" %}
+      <div class="tests-another_result">
+        <h3><strong>{{ forloop.counter|add:"1" }}. {{ result.1.result_title }}</strong></h3>
+        <p class="tests-similarity">Сходство с этим результатом: {{ result.0 }}%</p>
+        <div class="tests-another_result_img">
+          <img class="tests-another_result_img" src='{{ result.1.result_image.url }}' alt="Картинка к {{ result.1.result_title }}"></img>
+        </div>
+        <p>{{ result.1.result_desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

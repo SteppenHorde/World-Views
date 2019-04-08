@@ -1,0 +1,13 @@
+.main_desc {
+    background-color: #E5E5E5;
+    box-shadow: 0rem 0rem 0.25rem #222222;
+    border-radius: 1.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5vmax;
+}
+
+form.main-show_all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

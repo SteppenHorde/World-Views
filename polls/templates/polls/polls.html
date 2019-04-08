@@ -1,0 +1,11 @@
+{% extends "polls/polls_base.html" %}
+{% load static %}
+
+{% block title %}Опросы{% endblock %}
+
+{% block content %}
+  <div class="content">
+    {% block polls_h %}<h1><strong>Опросы:</strong></h1>{% endblock %}
+    {% include "polls/polls_list.html" %}
+  </div>
+{% endblock %}

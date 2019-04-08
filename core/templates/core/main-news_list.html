@@ -1,0 +1,11 @@
+{% if news_list.count > 0 %}
+  {% for news in news_list %}
+    <div class="news col-sm">
+      <h3><a class="stretched-link" href="{% url "show_news" news.id %}">{{ news.news_title }}</a></h3>
+      <img class="news_img" src="{{ news.news_image.url }}" alt="Картинка к новости" width="100%" vspace="10"></img>
+      <p>{{ news.brief }}</p>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>Нет новостей.</p>
+{% endif %}

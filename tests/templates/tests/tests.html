@@ -1,0 +1,13 @@
+{% extends "tests/tests_base.html" %}
+{% load static %}
+
+{% block title %}Тесты{% endblock %}
+
+{% block content %}
+  <div class="content">
+    {% block polls_h %}<h1><strong>Тесты:</strong></h1>{% endblock %}
+    <div class="row">
+      {% include "tests/tests_list.html" %}
+    </div>
+  </div>
+{% endblock %}

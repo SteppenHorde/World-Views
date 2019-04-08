@@ -1,0 +1,24 @@
+{% extends "tests/tests_base.html" %}
+{% load static %}
+
+{% block title %}{{ test.test_title }}{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'tests/css/tests.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <h1><strong>{{ test.test_title }}</strong></h1>
+    <form class="tests-quiz_test" action="{% url "quiz_test" test.id %}">
+      <button class="btn btn-primary btn-sm" type="submit">Пройти тест</button>
+    </form>
+    <div class="test_img">
+      <img class="test_img" src="{{ test.test_image.url }}" alt="Картинка к тесту" vspace="25rem"></img>
+    </div>
+    <p>{{ test.test_desc }}</p>
+    <form class="tests-quiz_test" action="{% url "quiz_test" test.id %}">
+      <button class="btn btn-primary btn-md" type="submit">Пройти тест</button>
+    </form>
+  </div>
+{% endblock %}

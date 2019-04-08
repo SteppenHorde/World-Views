@@ -1,0 +1,26 @@
+{% load filters %}
+
+<form method="post" class="voteForm" id="poll{{ poll.id }}" action="{% url 'polls_vote' poll.id %}">
+  {% csrf_token %}
+  <h3>{{ poll.poll_title }}</h3>
+  {% for choice in choices %}
+    <p>
+      {% with percent=poll.all_votes|get_percent:choice.votes %}
+        {% if choice.id in selected_choices %}
+          <p>{{ choice.choice_text }} <strong>&#10004;</strong></p>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{ percent }}%;" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">{{ percent }}%</div>
+          </div>
+          <p class="hm_voted">(Проголосовало: {{ choice.votes }})</p>
+        {% else %}
+          <p>{{ choice.choice_text }}</p>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: {{ percent }}%;" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100">{{ percent }}%</div>
+          </div>
+          <p class="hm_voted">(Проголосовало: {{ choice.votes }})</p>
+        {% endif %}
+      {% endwith %}
+    </p>
+  {% endfor %}
+  <p class="all_voted">(<i>Общее число проголосовавших: <strong>{{ poll.all_votes }}</strong></i>)</p>
+</form>
