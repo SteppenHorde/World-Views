@@ -88,6 +88,10 @@ form.tests-quiz_test {
     justify-content: center;
 }
 
+custom-control-label {
+    margin-bottom: 1.25vmax;
+}
+
 p#question-text {
     text-align: center;
 }
