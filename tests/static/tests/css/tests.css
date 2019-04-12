@@ -88,7 +88,7 @@ form.tests-quiz_test {
     justify-content: center;
 }
 
-custom-control-label {
+.custom-control-label {
     margin-bottom: 1.25vmax;
 }
 
