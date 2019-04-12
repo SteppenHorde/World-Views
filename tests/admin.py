@@ -38,6 +38,14 @@ class ResultInline(nested_admin.NestedTabularInline):
     extra = 0
 
 
+class QuestionAdmin(nested_admin.NestedModelAdmin): # для отдельной админки для вопроса
+    fieldsets = [
+        ('QUESTION', {'fields': ['test', 'question_title', 'one_option']}),
+    ]
+    inlines = [ChoiceInline]
+    extra = 0
+
+
 class TestAdmin(nested_admin.NestedModelAdmin):
     fieldsets = [
         ('TEST', {'fields': ['pub_date', 'test_title', 'test_desc', 'brief', 'test_image', 'published']}),
@@ -49,6 +57,7 @@ class TestAdmin(nested_admin.NestedModelAdmin):
 
 
 admin.site.register(TestsTest, TestAdmin)
+admin.site.register(TestsQuestion, QuestionAdmin)
 
 
 '''admin.site.register(TestsTest)
