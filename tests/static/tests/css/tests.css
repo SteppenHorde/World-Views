@@ -102,6 +102,12 @@ form#choices {
     margin-bottom: 0.9rem;
 }
 
+div.tests-quiz_btns {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
 button.tests-quiz_btn {
     margin-top: 0.65rem;
     width: 50vmax;
@@ -119,19 +125,19 @@ div.tests-another_result > img.tests-another_result_img {
 }
 
 .tests-main_result_img {
-  border-radius: 1.5rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    border-radius: 1.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tests-another_result_img {
-  border-radius: 1.5rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    border-radius: 1.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 div.tests-main_result {
