@@ -21,15 +21,6 @@ class ChoiceInline(nested_admin.NestedTabularInline):
     extra = 0
 
 
-class QuestionInline(nested_admin.NestedStackedInline):
-    fieldsets = [
-        ('QUESTION', {'fields': ['question_title', 'one_option']}),
-    ]
-    inlines = [ChoiceInline]
-    model = TestsQuestion
-    extra = 0
-
-
 class ResultInline(nested_admin.NestedTabularInline):
     fieldsets = [
         (None, {'fields': ['result_title', 'result_desc', 'result_image']}),
@@ -38,7 +29,7 @@ class ResultInline(nested_admin.NestedTabularInline):
     extra = 0
 
 
-class QuestionAdmin(nested_admin.NestedModelAdmin): # для отдельной админки для вопроса
+class QuestionAdmin(nested_admin.NestedModelAdmin): # отдельная админка для вопроса
     fieldsets = [
         ('QUESTION', {'fields': ['test', 'question_title', 'one_option']}),
     ]
@@ -50,7 +41,7 @@ class TestAdmin(nested_admin.NestedModelAdmin):
     fieldsets = [
         ('TEST', {'fields': ['pub_date', 'test_title', 'test_desc', 'brief', 'test_image', 'published']}),
     ]
-    inlines = [ResultInline, QuestionInline]
+    inlines = [ResultInline]
     list_display = ('test_title', 'pub_date', 'published')
     list_filter = ['pub_date']
     search_fields = ['test_title', 'test_desc']
