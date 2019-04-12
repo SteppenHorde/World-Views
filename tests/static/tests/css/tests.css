@@ -88,12 +88,6 @@ form.tests-quiz_test {
     justify-content: center;
 }
 
-div.tests-quiz {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 p#question-text {
     text-align: center;
 }
